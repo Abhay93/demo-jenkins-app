@@ -8,7 +8,7 @@ pipeline {
 		stage('Deploy') {
 			steps {
 				sh 'Deploying App to Cloudhub'
-				bat 'mvn deploy -DmuleDeploy''
+				bat 'mvn deploy -DmuleDeploy'
 			}
 		}
 	}
