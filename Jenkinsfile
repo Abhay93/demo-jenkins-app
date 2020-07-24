@@ -5,6 +5,7 @@ pipeline {
 				sh 'mvn --version'
 				bat 'mvn clean package'
 			}
+		}
 		stage('Deploy') {
 			steps {
 				sh 'Deploying App to Cloudhub'
