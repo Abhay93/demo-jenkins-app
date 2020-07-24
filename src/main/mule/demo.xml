@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:vm="http://www.mulesoft.org/schema/mule/vm" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/vm http://www.mulesoft.org/schema/mule/vm/current/mule-vm.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="418b5838-b279-4869-9478-be746910202b" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<vm:config name="VM_Config" doc:name="VM Config" doc:id="f99cd631-f2a5-4cd6-a604-d029c6798af9" >
+		<vm:queues >
+			<vm:queue queueName="vm-q" />
+		</vm:queues>
+	</vm:config>
+	<flow name="demoFlow" doc:id="4f0e261c-a80c-4ac9-9c79-061880897e8a" >
+		<http:listener doc:name="Listener" doc:id="484214ab-7351-482f-b49f-14c8163b02aa" config-ref="HTTP_Listener_config" path="/demo"/>
+		<vm:publish queueName="vm-q" doc:name="Publish" doc:id="b25c41cd-1420-4de3-8480-f83f53c6571b" config-ref="VM_Config">
+			<vm:content ><![CDATA[{"OP": "John"]]></vm:content>
+		</vm:publish>
+		<set-payload value="MRT SERVER" doc:name="Set Payload" doc:id="d0d4d939-b7df-474f-9d8d-66be5eec2f97" />
+	</flow>
+	<flow name="demoFlow2" doc:id="a4133824-7f82-47b9-b669-e55067db07de" >
+		<vm:listener queueName="vm-q" doc:name="Listener" doc:id="c7bc24b9-4df8-4644-b046-ecc6148b0b27" config-ref="VM_Config"/>
+		<logger level="INFO" doc:name="Logger" doc:id="5f57a4d5-be47-49dd-8be3-f90d5b5fbd3f" message="#[payload]"/>
+	</flow>
+	<flow name="demoFlow1" doc:id="aae4c611-973a-4bdd-b04c-32e5a34f751e" >
+		<scheduler doc:name="Scheduler" doc:id="f3a41bf7-8d8d-40e2-a993-943459f84c04" >
+			<scheduling-strategy >
+				<fixed-frequency />
+			</scheduling-strategy>
+		</scheduler>
+		<logger level="INFO" doc:name="Logger" doc:id="1c7f52f0-5b08-4879-81c6-2f0d2dce2fb1" message='Info Logger ${app.home}'/>
+		<logger level="DEBUG" doc:name="Logger" doc:id="160cba2a-7348-4ed4-b99e-3c10ec79f562" message="Debug Logger ${app.name}" />
+		<logger level="ERROR" doc:name="Logger" doc:id="9b2ad37d-8819-4ce0-b788-a62328ee89ab" message="Error Logger"/>
+		<logger level="WARN" doc:name="Logger" doc:id="0cc93067-9364-4416-978e-6750c51ed3f3" message="Warn Logger"/>
+		<logger level="TRACE" doc:name="Logger" doc:id="b82121ce-876b-483e-9193-d03150afe586" message="Trace Logger"/>
+		<raise-error doc:name="Raise error" doc:id="8f419bba-1289-40a1-9588-d3362eaa93a2" type="ANY"/>
+	</flow>
+</mule>
