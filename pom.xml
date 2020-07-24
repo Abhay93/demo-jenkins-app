@@ -40,6 +40,8 @@
 						<password>Maya@128125</password>
 						<applicationName>demo-jenkins-app</applicationName>
 						<environment>Sandbox</environment>
+<!-- 						<region>eu-west-2</region> -->
+						<workerType>Micro</workerType>
 						<workers>1</workers>
 					</cloudHubDeployment>
 				</configuration>
