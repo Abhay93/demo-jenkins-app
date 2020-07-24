@@ -8,6 +8,7 @@ pipeline {
 		}
 		stage('Deploy') {
 			steps {
+				input('Continue to Deploy?')
 				bat 'mvn deploy -DmuleDeploy'
 			}
 		}
