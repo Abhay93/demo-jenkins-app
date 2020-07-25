@@ -13,7 +13,8 @@ pipeline {
                     try {
 						timeout(time: 100, unit: 'SECONDS') {
 							input('Continue to Deploy?')
-        	    	    } catch (err) {
+        	    	    }
+        	    	} catch (err) {
                         proceed = false
                     }
                     if(proceed) {
