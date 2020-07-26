@@ -24,4 +24,9 @@ pipeline {
 			}
 		}
 	}
+	post { 
+        always { 
+            echo 'Hello there!'
+        }
+    }
 }
