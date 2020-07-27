@@ -60,10 +60,10 @@ pipeline {
             echo 'Cleanup Condition!'
         }     
     }
- def sendEmail(status) {
+}
+def sendEmail(status) {
     mail(
             to: "$EMAIL_RECIPIENTS",
             subject: "Build $BUILD_NUMBER - " + status + " (${currentBuild.fullDisplayName})",
             body: "Changes:\n " + getChangeString() + "\n\n Check console output at: $BUILD_URL/console" + "\n")
-}
 }
