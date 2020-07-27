@@ -27,7 +27,6 @@ pipeline {
 	post { 
         always { 
             echo 'Always Condition!'
-            sendEmail(currentBuild.currentResult);
         } 
         changed { 
             echo 'Changed Condition!'
