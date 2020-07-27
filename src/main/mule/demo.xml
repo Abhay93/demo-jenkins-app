@@ -18,7 +18,7 @@ http://www.mulesoft.org/schema/mule/vm http://www.mulesoft.org/schema/mule/vm/cu
 		<vm:publish queueName="vm-q" doc:name="Publish" doc:id="b25c41cd-1420-4de3-8480-f83f53c6571b" config-ref="VM_Config">
 			<vm:content ><![CDATA[{"OP": "John"]]></vm:content>
 		</vm:publish>
-		<set-payload value="MRT APP BY JENKINS SSS" doc:name="Set Payload" doc:id="d0d4d939-b7df-474f-9d8d-66be5eec2f97" />
+		<set-payload value="MRT APP BY JENKINS SSS" doc:name="Set Payload as" doc:id="d0d4d939-b7df-474f-9d8d-66be5eec2f97" />
 	</flow>
 	<flow name="demoFlow2" doc:id="a4133824-7f82-47b9-b669-e55067db07de" >
 		<vm:listener queueName="vm-q" doc:name="Listener" doc:id="c7bc24b9-4df8-4644-b046-ecc6148b0b27" config-ref="VM_Config"/>
