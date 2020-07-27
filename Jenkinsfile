@@ -1,5 +1,8 @@
 pipeline {
 	agent any
+	environment {
+        EMAIL_RECIPIENTS = 'asyadav1593@gmail.com'
+    }
 	stages {
 		stage('Build') {
 			steps {
@@ -27,6 +30,7 @@ pipeline {
 	post { 
         always { 
             echo 'Always Condition!'
+            sendEmail(currentBuild.currentResult);
         } 
         changed { 
             echo 'Changed Condition!'
@@ -56,4 +60,10 @@ pipeline {
             echo 'Cleanup Condition!'
         }     
     }
+}
+def sendEmail(status) {
+    mail(
+            to: "$EMAIL_RECIPIENTS",
+            subject: "Build $BUILD_NUMBER - " + status + " (${currentBuild.fullDisplayName})",
+            body: "Check console output at: $BUILD_URL/console" + "\n")
 }
