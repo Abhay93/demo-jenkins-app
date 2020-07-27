@@ -9,16 +9,9 @@ pipeline {
 		stage('Deploy') {
 			steps {
 				script {
-					def proceed = true
-                    try {
-						timeout(time: 100, unit: 'SECONDS') {
-							input('Continue to Deploy?')
-        	    	    }
-        	    	} catch (err) {
-                        proceed = false
-                    }
-                    if(proceed) {
-                    	bat 'mvn deploy -DmuleDeploy'
+					timeout(time: 100, unit: 'SECONDS') {
+					input('Continue to Deploy?')
+                	bat 'mvn deploy -DmuleDeploy'
 					}
 				}
 			}
