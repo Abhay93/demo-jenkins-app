@@ -1,8 +1,5 @@
 pipeline {
 	agent any
-	environment {
-        EMAIL_RECIPIENTS = 'muletutorials@gmail.com'
-    }
 	stages {
 		stage('Build') {
 			steps {
@@ -63,7 +60,7 @@ pipeline {
 }
 def sendEmail(status) {
     mail(
-            to: "$EMAIL_RECIPIENTS",
+            to: "muletutorials@gmail.com",
             subject: "Build $BUILD_NUMBER - " + status + " (${currentBuild.fullDisplayName})",
             body: "Check console output at: $BUILD_URL/console" + "\n")
 }
