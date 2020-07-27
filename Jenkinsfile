@@ -26,7 +26,37 @@ pipeline {
 	}
 	post { 
         always { 
-            echo 'Hello there!'
+            echo 'Always Condition!'
+        } 
+        changed { 
+            echo 'Changed Condition!'
+        } 
+        fixed { 
+            echo 'Fixed Condition!'
+        } 
+        regression { 
+            echo 'Regression Condition!'
+        } 
+        aborted { 
+            echo 'Aborted Condition!'
+        } 
+        failure { 
+            echo 'Failure Condition!'
+        } 
+        success { 
+            echo 'Success Condition!'
+        } 
+        unstable { 
+            echo 'Unstable Condition!'
+        } 
+        unsuccessful { 
+            echo 'Unsuccessful Condition!'
+        } 
+        cleanup { 
+            echo 'Cleanup Condition!'
         }
+        
+        
+        
     }
 }
