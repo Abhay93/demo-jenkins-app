@@ -1,5 +1,8 @@
 pipeline {
 	agent any
+	environment {
+        EMAIL_RECIPIENTS = 'asyadav1593@gmail.com'
+    }
 	stages {
 		stage('Build') {
 			steps {
@@ -9,9 +12,16 @@ pipeline {
 		stage('Deploy') {
 			steps {
 				script {
-					timeout(time: 100, unit: 'SECONDS') {
-					input('Continue to Deploy?')
-                	bat 'mvn deploy -DmuleDeploy'
+					def proceed = true
+                    try {
+						timeout(time: 100, unit: 'SECONDS') {
+							input('Continue to Deploy?')
+        	    	    }
+        	    	} catch (err) {
+                        proceed = false
+                    }
+                    if(proceed) {
+                    	bat 'mvn deploy -DmuleDeploy'
 					}
 				}
 			}
@@ -20,6 +30,7 @@ pipeline {
 	post { 
         always { 
             echo 'Always Condition!'
+            sendEmail("Unstable");
         } 
         changed { 
             echo 'Changed Condition!'
@@ -47,9 +58,12 @@ pipeline {
         } 
         cleanup { 
             echo 'Cleanup Condition!'
-        }
-        
-        
-        
+        }     
     }
+ def sendEmail(status) {
+    mail(
+            to: "$EMAIL_RECIPIENTS",
+            subject: "Build $BUILD_NUMBER - " + status + " (${currentBuild.fullDisplayName})",
+            body: "Changes:\n " + getChangeString() + "\n\n Check console output at: $BUILD_URL/console" + "\n")
+}
 }
