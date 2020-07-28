@@ -1,5 +1,8 @@
 pipeline {
 	agent any
+	environment {
+        RECIPIENTS_EMAIL = 'muletutorials@gmail.com'
+    }
 	stages {
 		stage('Build') {
 			steps {
@@ -27,6 +30,7 @@ pipeline {
 	post { 
         always { 
             echo 'Always Condition!'
+			archiveArtifacts artifacts: 'archive.jar'
             sendEmail(currentBuild.currentResult);
         } 
         changed { 
@@ -60,7 +64,7 @@ pipeline {
 }
 def sendEmail(status) {
     mail(
-            to: "muletutorials@gmail.com",
+            to: "$EMAIL_RECIPIENTS",
             subject: "Build $BUILD_NUMBER - " + status + " (${currentBuild.fullDisplayName})",
             body: "Check console output at: $BUILD_URL/console" + "\n")
 }
