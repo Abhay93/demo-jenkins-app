@@ -30,7 +30,7 @@ pipeline {
 	post { 
         always { 
             echo 'Always Condition!'
-			archiveArtifacts artifacts: 'archive.jar'
+			archiveArtifacts artifacts: 'demo-pipeline.jar'
             sendEmail(currentBuild.currentResult);
         } 
         changed { 
